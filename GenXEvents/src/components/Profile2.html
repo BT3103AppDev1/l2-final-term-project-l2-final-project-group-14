@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Meta Tags -->
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="../assets/ben-o-bro-wpU4veNGnHg-unsplash.jpg">
+    
+    <!-- Title -->
+    <title>🌴 ・ Inaya</title>
+
+    <!-- Css -->
+    <link rel="stylesheet" href="../assets/css/style.css">
+
+    <!-- Javascript -->
+    
+    <!-- Fonts -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" integrity="sha512-HK5fgLBL+xu6dm/Ii3z4xhlSUyZgTT9tuc/hSrtw6uzJOvgRr2a9jyxxT1ely+B+xFAmJKVSTbpM/CuL7qxO8w==" crossorigin="anonymous">
+
+</head>
+<body>
+
+    <header>
+        <nav>
+            <div class="header_logo">
+                <img src="../assets/ben-o-bro-wpU4veNGnHg-unsplash.jpg" alt="" srcset="">
+            </div>
+            <div class="header_links">
+                <ul class="nav_links">
+                    <li class="nav_link"><a href="#">Home</a></li>
+                    <!-- <li class="nav_link"><a href="#">Shop</a></li> -->
+                    <!-- <li class="nav_link"><a href="#">Repos</a></li> -->
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <section class="main">
+        <img src="../assets/ben-o-bro-wpU4veNGnHg-unsplash.jpg" alt="" srcset="">
+        <span>Felix Ivan Taslim</span>
+        <p>Outdoor enthusiast, foodie and traveller</p>
+        <ul>
+            <li><a target="_blank" href="https://www.linkedin.com/in/felix-ivan-taslim-5783b2222/"><i class="fab fa-discord"></i></a></li>
+            <li><a target="_blank" href="https://github.com/KanekiWeb"><i class="fab fa-github"></i></a></li>
+            <li><a target="_blank" href="https://www.youtube.com/channel/UC-XII5SSqbMOF1UX3N0Gl8g"><i class="fab fa-youtube"></i></a></li>
+        </ul>
+
+        <div class="profile-section">
+            <h1>Profile</h1>
+            <div id="profileDetails">
+                <h2>Email: example@example.com</h2>
+                <h2>Date of Birth: January 1, 1990</h2>
+                <h2>Hobbies: Hiking, Cooking, Reading</h2>
+                <h2>Phone Number: +1234567890</h2>
+            </div>
+            <div id="editProfileForm" style="display: none;">
+                <label for="dob">Date of Birth:</label>
+                <input type="text" id="dob" value="January 1, 1990">
+                <br>
+                <label for="hobbies">Hobbies:</label>
+                <input type="text" id="hobbies" value="Hiking, Cooking, Reading">
+                <br>
+                <label for="phone">Phone Number:</label>
+                <input type="text" id="phone" value="+1234567890">
+                <br>
+                <button id="saveProfileBtn">Save</button>
+            </div>
+            <button id="editProfileBtn">Edit Profile</button>
+        </div>
+    </section>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const editProfileBtn = document.getElementById("editProfileBtn");
+            const profileDetails = document.getElementById("profileDetails");
+            const editProfileForm = document.getElementById("editProfileForm");
+            const saveProfileBtn = document.getElementById("saveProfileBtn");
+
+            editProfileBtn.addEventListener("click", function() {
+                profileDetails.style.display = "none";
+                editProfileForm.style.display = "block";
+            });
+
+            saveProfileBtn.addEventListener("click", function() {
+                const dob = document.getElementById("dob").value;
+                const hobbies = document.getElementById("hobbies").value;
+                const phone = document.getElementById("phone").value;
+
+                profileDetails.innerHTML = `
+                    <h2>Email: example@example.com</h2>
+                    <h2>Date of Birth: ${dob}</h2>
+                    <h2>Hobbies: ${hobbies}</h2>
+                    <h2>Phone Number: ${phone}</h2>
+                `;
+
+                profileDetails.style.display = "block";
+                editProfileForm.style.display = "none";
+            });
+        });
+    </script>
+</body>
+</html>
