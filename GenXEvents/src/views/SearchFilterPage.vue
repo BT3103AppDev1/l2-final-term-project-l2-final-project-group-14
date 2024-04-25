@@ -1,4 +1,5 @@
 <template>
+  <NavBar />
     <div >
       <!-- Search Bar -->
       <div class="input-group mb-3" >
@@ -70,6 +71,7 @@
         </div>
       </Container>
     </div>
+    <Footer />
 </template>
   
 <style>
@@ -87,12 +89,20 @@
   import Card from 'primevue/card';
   import Divider from 'primevue/divider';
   import firebaseTools from '../firebase.js';
+  import Footer from '@/components/Footer.vue';
   import { collection, getDocs } from 'firebase/firestore';
+import NavBar from '@/components/NavBar.vue';
   const db = firebaseTools.db;
 
   export default {
     async mounted() {
       await this.retrieveData();
+    },
+
+    components: {
+      Card,
+      Footer,
+      NavBar
     },
 
     methods:{

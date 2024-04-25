@@ -5,16 +5,17 @@ import SignIn from '@/views/SignIn.vue';
 import ActivityPage from '@/views/ActivityPage.vue';
 import SignUp from '@/views/SignUp.vue';
 import ProfilePage from '@/views/ProfilePage.vue';
+import LandingPage from '@/views/LandingPage.vue';
 
 const routes = [
     {
         path: '/',
-        name: 'Explore Page',
-        component: ExplorePage
+        name: 'Landing Page',
+        component: LandingPage
     },
 
     {
-        path: '/activity-page',
+        path: '/activity',
         name: 'Activity Page',
         component: ActivityPage
     },
@@ -22,9 +23,9 @@ const routes = [
 
 
     {
-        path: '/landing-page',
-        name: 'Landing Page'
-        // component: LandingPage
+        path: '/explore',
+        name: 'Explore Page',
+        component: ExplorePage
     },
 
     {
@@ -46,7 +47,7 @@ const routes = [
     },
 
     {
-        path: '/filter-page',
+        path: '/search-and-filter',
         name: 'Search and Filter Page',
         component: SearchFilterPage
     },

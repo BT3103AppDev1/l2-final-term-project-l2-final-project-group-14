@@ -1,7 +1,7 @@
 <template>
     <nav class="navbar">
         <div class="left-cont">
-            <router-link to="/home" class="nav-link-title">GenXEvent</router-link>
+            <router-link to="/" class="nav-link-title">GenXEvent</router-link>
             <router-link to="/explore" class="nav-link">Explore</router-link>
             <router-link to="/favourites" class="nav-link">Favourites</router-link>
         </div>
