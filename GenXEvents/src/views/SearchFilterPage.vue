@@ -45,20 +45,21 @@
                     max-width="600"
 
                     @click="accessPage(activity)"
-                    style="width: 100%; max-width: 300px; height: 450px; margin-bottom: 10px; margin-top: 10px;"
+                    style="width: 100%; max-width: 300px; height: 450px; margin-bottom: 10px; margin-top: 10px; display: flex; flex-direction: column; justify-content: space-between;"
                   >
                     <template #header>
                       <img class="w-100"
                       alt="activity image"
-                      :src= "getImage(activity['Activity ID'])" />
+                      :src= "getImage(activity['Activity ID'])"
+                      style="height: 250px;" />
                     </template>
                     
-                    <template #title>{{activity.Type}} </template>
+                    <template #title >
+                      <div class="activity-title">{{activity.Type}} </div>
+                    </template>
                     <template #subtitle>{{activity['Location']}} </template>
                     <template #content>
-                      <p class="m-0">
-                        {{activity.Description}}
-                      </p>
+                      <div class="activity-description">{{activity.Description}}</div>
                     </template>
                     <template #footer>
                       Price: ${{activity.Cost}}
@@ -73,17 +74,6 @@
     </div>
     <Footer />
 </template>
-  
-<style>
-    .v-card--reveal {
-      align-items: center;
-      bottom: 0;
-      justify-content: center;
-      opacity: .8;
-      position: absolute;
-      width: 100%;
-    }
-</style>
 
 <script>
   import Card from 'primevue/card';
@@ -410,5 +400,20 @@
   box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
   cursor: pointer;
 }
+
+.activity-title {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    margin-bottom: 5px; /* Optional: Add margin for better spacing */
+  }
+
+.activity-description {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2; /* Limit the description to 2 lines */
+    -webkit-box-orient: vertical;
+  }
 </style>
   
