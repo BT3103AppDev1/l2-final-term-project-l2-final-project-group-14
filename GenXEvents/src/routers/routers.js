@@ -4,6 +4,7 @@ import SearchFilterPage from '../views/SearchFilterPage.vue';
 import SignIn from '@/views/SignIn.vue';
 import ActivityPage from '@/views/ActivityPage.vue';
 import SignUp from '@/views/SignUp.vue';
+import ProfilePage from '@/views/ProfilePage.vue';
 
 const routes = [
     {
@@ -23,7 +24,7 @@ const routes = [
     {
         path: '/landing-page',
         name: 'Landing Page'
-        // Landing Page
+        // component: LandingPage
     },
 
     {
@@ -39,6 +40,12 @@ const routes = [
     },
 
     {
+        path: '/profile',
+        name: 'Profile Page',
+        component: ProfilePage
+    },
+
+    {
         path: '/filter-page',
         name: 'Search and Filter Page',
         component: SearchFilterPage
@@ -46,7 +53,7 @@ const routes = [
     {
         path: '/favourites',
         name: 'Favourites Page'
-        // Favourites Page
+        // component: FavouritePage
     }
 ]
 

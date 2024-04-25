@@ -1,7 +1,7 @@
 
   <template>
-    <div class="profile-container">
-      <h2>User Profile</h2>
+    <div class="profile-container" v-if="user">
+      <h2>Welcome back, {{ user.username }}!</h2>
       <div v-if="user">
         <div class="profile-field">
           <label>Username:</label>
@@ -156,7 +156,7 @@ export default {
     display: block;
     width: 100%;
     padding: 10px 0;
-    /* background-color: #007bff; */
+    background-color: #007bff;
     color: white;
     border: none;
     border-radius: 4px;
@@ -165,7 +165,7 @@ export default {
   }
   
   button:hover {
-    /* background-color: #0056b3; */
+    background-color: #0056b3;
   }
   </style>
   

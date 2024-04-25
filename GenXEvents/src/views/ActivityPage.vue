@@ -1,6 +1,6 @@
 <template>
-
   <div class = "NavBar">
+    <NavBar />
           </div>
           <div class= "content-wrapper" v-if="this.activity">
               <div class="activity-details">
@@ -87,7 +87,7 @@ import CommentsForm from '../components/CommentsForm.vue';
 import CommentsSection from '../components/CommentsSection.vue';
 import ToggleButton from 'primevue/togglebutton';
 import Footer from '@/components/Footer.vue';
-// import NavBar from '@/components/NavBar.vue';
+import NavBar from '@/components/NavBar.vue';
 const activitiesCollection = collection(db, 'activities');
 
 export default {
@@ -99,7 +99,8 @@ export default {
     CommentsForm,
     CommentsSection,
     ToggleButton,
-    Footer
+    Footer,
+    NavBar
   },
   data() {
       return {
