@@ -1,8 +1,10 @@
 <template>
   <div id="app">
     <NavBar />
-    <h1>Join GenXEvents now!</h1>
-    <p>Find exciting events in Singapore!</p>
+    <div class="hero-image">
+      <h1>Join GenXEvents now!</h1>
+      <p>Find exciting events in Singapore!</p>
+    </div>
     
     <!-- Exciting Upcoming Events Section -->
     <section class="upcoming-events">
@@ -151,6 +153,15 @@ export default {
 </script>
 
 <style>
+.hero-image {
+  background-image: url('@/assets/joshua-earle-C6duwascOEA-unsplash.jpg'); /* Replace with your image path */
+  background-size: cover; /* Cover the entire area of the element */
+  background-position: center; /* Center the background image */
+  text-align: center; /* Center the text inside the container */
+  padding: 50px 0; /* Add some padding around the text */
+  color: white; /* Set the text color to white for better visibility */
+}
+
 .card-image {
   width: 100%;
   height: 200px;
@@ -176,4 +187,3 @@ export default {
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
 }
 </style>
-  
