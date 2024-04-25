@@ -190,7 +190,7 @@ export default {
     display: block;
     width: 100%;
     padding: 10px 0;
-    color: #ffcc00;
+    background-color: #ffcc00;
     border: none;
     border-radius: 4px;
     cursor: pointer;
