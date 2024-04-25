@@ -21,7 +21,7 @@
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import firebaseTools from '../firebase.js';
-const { firebaseAuth } = firebaseTools;
+const firebaseAuth  = firebaseTools.auth;
 import { signInWithEmailAndPassword } from "firebase/auth";
 import InputText from 'primevue/inputtext';
 import Button from 'primevue/button';
@@ -32,6 +32,44 @@ export default {
     Button
   },
 
+    data() {
+      return {
+        email: "",
+        password: "",
+        isWelcomeVisible: false,
+        isErrorVisible: false
+      };
+    },
+    methods: {
+      async signIn() {
+        const email = this.email;
+        const password = this.password;
+  
+        try {
+          // Sign in user with email and password
+          await firebaseTools.signInWithEmailAndPassword(auth, email, password);
+  
+          // Signin successful, display welcome message
+          this.isWelcomeVisible = true;
+          this.isErrorVisible = false;
+          console.log("User signed in:", auth.currentUser.uid);
+
+          firebaseTools.onAuthStateChanged(auth, (user) => {
+            if (user) {
+              this.$router.push({ name: 'Explore Page'})
+            }
+          })
+        } catch (error) {
+          // Handle errors
+          this.isWelcomeVisible = false;
+          this.isErrorVisible = true;
+          console.error(error);
+        }
+      },
+      refreshPage() {
+        location.reload(); // Refresh the page
+      }
+    },
   setup() {
     const router = useRouter();
     const email = ref('');
@@ -44,7 +82,7 @@ export default {
       try {
         await signInWithEmailAndPassword(firebaseAuth, email.value, password.value);
         console.log("User signed in successfully.");
-        router.push('/home'); // Redirect to home page after successful sign-in
+        router.push('/'); // Redirect to home page after successful sign-in
       } catch (error) {
         console.error("Sign-in failed:", error);
         errorMessage.value = error.message; // Set the error message to display on the UI
@@ -58,7 +96,7 @@ export default {
       errorMessage
     };
   }
-};
+}
 </script>
 
 <style scoped>
