@@ -14,7 +14,7 @@
         </div>
         
       </div>
-      <Container>
+      <v-container>
         <div class="row">
           <div class="col-md-3 col-sm-3 col-xs-12">
             <Card>
@@ -50,7 +50,7 @@
                     <template #header>
                       <img class="w-100"
                       alt="activity image"
-                      :src="getImage(activity['Activity ID'])" />
+                      :src= "getImage(activity['Activity ID'])" />
                     </template>
                     
                     <template #title>{{activity.Type}} </template>
@@ -69,7 +69,7 @@
             </div>
           </div>
         </div>
-      </Container>
+      </v-container>
     </div>
     <Footer />
 </template>
@@ -89,9 +89,9 @@
   import Card from 'primevue/card';
   import Divider from 'primevue/divider';
   import firebaseTools from '../firebase.js';
-  import Footer from '@/components/Footer.vue';
   import { collection, getDocs } from 'firebase/firestore';
-import NavBar from '@/components/NavBar.vue';
+  import NavBar from '@/components/NavBar.vue';
+  import Footer from '@/components/Footer.vue';
   const db = firebaseTools.db;
 
   export default {
@@ -100,12 +100,14 @@ import NavBar from '@/components/NavBar.vue';
     },
 
     components: {
-      Card,
-      Footer,
-      NavBar
+      NavBar,
+      Footer
     },
 
     methods:{
+    getImage(id) {
+        return `https://nus-392633763.imgix.net/img_${id}.jpeg`;
+    },
       // get data of activites from database
       async retrieveData() {
         const activityCollection = collection(db, 'activities');
@@ -122,10 +124,6 @@ import NavBar from '@/components/NavBar.vue';
           console.error('Error fetching data:', error);
           // Handle the error, e.g., show a message to the user or retry fetching data
         }
-      },
-
-      getImage(id) {
-        return `https://nus-392633763.imgix.net/img_${id}.jpeg`;
       },
 
 
