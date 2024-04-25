@@ -1,4 +1,5 @@
 <template>
+  <NavBar />
   <main class="explore-page">
     <h2 id="Explore">Just For You</h2>
     <div class="recommendation-list-wrapper">
@@ -25,6 +26,7 @@
     </div>
     </div>
   </main>
+  <Footer />
 </template>
 
 <script>
@@ -32,6 +34,8 @@ import Card from 'primevue/card';
 import Tag from 'primevue/tag';
 import firebaseTools from '@/firebase';
 import { collection, getDocs, getDoc, doc, query, where } from 'firebase/firestore';
+import NavBar from '@/components/NavBar.vue';
+import Footer from '@/components/Footer.vue';
 const db = firebaseTools.db;
 const activityCollection = collection(db, 'activities');
 const users = collection(db, 'users');
@@ -40,7 +44,9 @@ const users = collection(db, 'users');
 export default {
   components: {
     Card,
-    Tag
+    Tag,
+    NavBar,
+    Footer
   },
   data() {
     return {

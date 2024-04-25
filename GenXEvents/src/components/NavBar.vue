@@ -8,8 +8,8 @@
         <div class="right-cont">
             <Button icon="pi pi-search" severity="success" rounded outlined aria-label="Search" @click="handleSearch" />
             <button v-if="loggedIn" @click="logout">Logout</button>
-            <button @click="goToSignup">Signup</button>
-            <button @click="goToLogin">Login</button>
+            <button @click="goToSignup" style="font-size: 1rem;">Signup</button>
+            <button @click="goToLogin" style="font-size: 1rem;">Login</button>
         </div>
     </nav>
 </template>
@@ -28,7 +28,7 @@ export default {
         }
     },
     mounted() {
-        onAuthStateChanged(auth, (user) => {
+        firebaseTools.onAuthStateChanged(auth, (user) => {
             if (user) {
                 this.loggedIn = true;
             }
@@ -82,6 +82,7 @@ export default {
     margin-top: 10px;
     margin-left: 50px;
     color: #333;
+    font-size: 1rem;
 }
 
 .left-cont {
