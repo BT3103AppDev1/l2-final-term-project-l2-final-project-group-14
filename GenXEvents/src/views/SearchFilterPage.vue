@@ -101,13 +101,15 @@
 
     components: {
       NavBar,
+      Card,
       Footer
     },
 
     methods:{
-    getImage(id) {
-        return `https://nus-392633763.imgix.net/img_${id}.jpeg`;
-    },
+      getImage(id) {
+          return `https://nus-392633763.imgix.net/img_${id}.jpeg`;
+      },
+      
       // get data of activites from database
       async retrieveData() {
         const activityCollection = collection(db, 'activities');

@@ -67,7 +67,7 @@ export default {
     return {
       events: [],
       eventsByInterest: [],
-      interests: ['Fitness', 'Cultural', 'Workshop', 'Wildlife', 'Food']
+      interests: ['Fitness', 'Cultural', 'Workshop', 'Wildlife', 'Guided Tour']
     };
   },
   created() {
@@ -114,13 +114,15 @@ export default {
         const uniqueId = new Set();
         interests.slice(0, 5).forEach(interest => {
           if (uniqueId.size >= 5) return; 
+          let foundActivity = false;
           querySnapshot.forEach(doc => {
+            if (foundActivity || uniqueId.size >= 5) return;
             const activity = doc.data();
             if (activity.Tags && activity.Tags.includes(interest)) {
               if (!uniqueId.has(activity['Activity ID'])) {
                 this.eventsByInterest.push(activity);
                 uniqueId.add(activity['Activity ID']);
-                return;
+                foundActivity = true;
               }
             }
           });
