@@ -2,7 +2,7 @@
   <NavBar />
   <main class="explore-page">
     <h2 id="Explore">Just For You</h2>
-    <div class="recommendation-list-wrapper">
+    <div v-if="recommendations" class="recommendation-list-wrapper">
     <div class="recommendation-list">
         <div v-for="recommendation in recommendations" :key="recommendation['Activity ID']" class="recommendation-item">
           <Card @click="accessPage(recommendation)" class="custom-card">
@@ -39,6 +39,7 @@ import Footer from '@/components/Footer.vue';
 const db = firebaseTools.db;
 const activityCollection = collection(db, 'activities');
 const users = collection(db, 'users');
+const auth = firebaseTools.auth;
 
 
 export default {
@@ -60,18 +61,54 @@ export default {
   },
   methods:{
     async loadData() {
-      await this.getHobbies();
-      this.retrieveData(this.tags);
+      const currentUser = auth.currentUser;
+      if (currentUser) {
+        await this.getHobbies();
+        this.retrieveData(this.tags);
+      } else {
+        await this.retrieveRandomActivities();
+      }
+    },
+
+    async retrieveRandomActivities() {
+      const querySnapshot = await getDocs(activityCollection);
+      const activities = [];
+      querySnapshot.forEach(doc => {
+        activities.push(doc.data());
+      });
+      const randomActivities = this.shuffleArray(activities).slice(0, 6);
+      this.recommendations = randomActivities;
+      console.log(this.recommendations);
+    },
+
+    shuffleArray(array) {
+      // Fisher-Yates shuffle algorithm
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+      return array;
     },
 
     async getHobbies() {
-      const q = query(users, where('username', '==', 'username10')) // using sample data
-      const querySnapshot = await getDocs(q);
-      querySnapshot.forEach(doc => {
-        const userData = doc.data();
-        this.tags = userData.hobbies;
-        console.log(userData.hobbies);
-      })
+      const currentUser = auth.currentUser;
+      if (currentUser) {
+        try {
+          const docRef = doc(db, "users", currentUser.uid);
+          const docSnap = await getDoc(docRef);
+          if (docSnap.exists()) {
+            const data = docSnap.data();
+            this.tags = data.hobbies
+            console.log(this.tags)
+          } else {
+            console.error("No such document!");
+          }
+        } catch (error) {
+          console.error("Error fetching user data:", error);
+        }
+      } else {
+        console.error("User is not logged in.");
+      }
     },
 
     getImage(id) {
