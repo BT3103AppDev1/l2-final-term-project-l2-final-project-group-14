@@ -53,7 +53,6 @@ export default {
     return {
       recommendations: null,
       tags: null
-      // Need to link with profile page
     };
   },
   mounted() {
