@@ -17,21 +17,21 @@ import 'primevue/resources/primevue.min.css';
 import 'primeicons/primeicons.css';
 
 // Import MDB Vue UI Kit CSS file
-import 'mdb-vue-ui-kit/css/mdb.min.css';
-import 'vuetify/styles'
-import { createVuetify } from 'vuetify'
-import * as components from 'vuetify/components'
-import * as directives from 'vuetify/directives'
+// import 'mdb-vue-ui-kit/css/mdb.min.css';
+// import 'vuetify/styles'
+// import { createVuetify } from 'vuetify'
+// import * as components from 'vuetify/components'
+// import * as directives from 'vuetify/directives'
 
-const vuetify = createVuetify({
-  components,
-  directives,
-})
+// const vuetify = createVuetify({
+//   components,
+//   directives,
+// })
 
 const app = createApp(App)
 app.use(router)
 app.use(PrimeVue)
-app.use(vuetify)
+// app.use(vuetify)
 app.component('Dropdown', Dropdown)
 app.component('Divider', Divider)
 app.component('Card', Card)

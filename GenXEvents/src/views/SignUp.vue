@@ -41,7 +41,8 @@
 import { ref, computed } from 'vue';
 import { useRouter } from 'vue-router';
 import firebaseTools from '../firebase.js';
-const { firebaseAuth, db } = firebaseTools;
+const firebaseAuth = firebaseTools.auth;
+const db = firebaseTools.db;
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { setDoc, doc, collection } from "firebase/firestore";
 import InputText from 'primevue/inputtext';
@@ -58,6 +59,7 @@ export default {
   },
 
   setup() {
+    const router = useRouter();
     const username = ref('');
     const email = ref('');
     const password = ref('');
@@ -90,7 +92,8 @@ export default {
         });
 
         console.log("User data stored successfully.");
-        this.$router.push({path: '/home'}); // Redirect to home page after successful signup
+        router.push({ path: '/' });
+        // this.$router.push({path: '/home'}); // Redirect to home page after successful signup
       } catch (error) {
         console.error("Signup failed:", error);
         alert(error.message);

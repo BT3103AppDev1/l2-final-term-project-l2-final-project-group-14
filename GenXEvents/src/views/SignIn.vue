@@ -21,7 +21,7 @@
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import firebaseTools from '../firebase.js';
-const { firebaseAuth } = firebaseTools;
+const firebaseAuth  = firebaseTools.auth;
 import { signInWithEmailAndPassword } from "firebase/auth";
 import InputText from 'primevue/inputtext';
 import Button from 'primevue/button';
@@ -82,7 +82,7 @@ export default {
       try {
         await signInWithEmailAndPassword(firebaseAuth, email.value, password.value);
         console.log("User signed in successfully.");
-        router.push('/home'); // Redirect to home page after successful sign-in
+        router.push('/'); // Redirect to home page after successful sign-in
       } catch (error) {
         console.error("Sign-in failed:", error);
         errorMessage.value = error.message; // Set the error message to display on the UI
