@@ -35,6 +35,7 @@
   
               <div class="right-column">
                     <div class="fav">
+                      
                       <ToggleButton
                         v-model="isFavorite"
                         on-icon="pi pi-heart-fill"
@@ -46,8 +47,10 @@
                       />
                     </div>
                     <div class="signup">
+                      <Button label="Go to Sign up Page" class="p-button-success signup-button" @click="goToSignUpPage"></Button>
+
                       <!-- <Button label="Add to Favourite" icon="pi pi-heart" class="p-button-warning"></Button> -->
-                      <Button label="Go to Sign up Page" class="p-button-success signup-button"></Button>
+                      <!-- <Button label="Go to Sign up Page" class="p-button-success signup-button"></Button> -->
                     </div>
   
                   <div class="category-tags">
@@ -78,17 +81,18 @@
 
 <script>
 import firebaseTools from '../firebase.js';
-import { collection, getDoc, doc } from 'firebase/firestore';
+import { collection, getDoc, doc, updateDoc, arrayUnion, arrayRemove } from 'firebase/firestore';
 const db = firebaseTools.db;
 import Rating from 'primevue/rating';
 import Button from 'primevue/button';
 import Textarea from 'primevue/textarea';
 import CommentsForm from '../components/CommentsForm.vue';
 import CommentsSection from '../components/CommentsSection.vue';
-import ToggleButton from 'primevue/togglebutton';
 import Footer from '@/components/Footer.vue';
 import NavBar from '@/components/NavBar.vue';
 const activitiesCollection = collection(db, 'activities');
+import { getAuth } from 'firebase/auth';
+import ToggleButton from 'primevue/togglebutton';
 
 export default {
   name: 'Activity Page',
@@ -105,12 +109,15 @@ export default {
   data() {
       return {
           activity: null,
-          id: null
+          id: null,
+          isFavorite: false,
+
       }
   },
   mounted() {
       this.fetchActivity();
       console.log(this.activity);
+      this.checkFavorite();
   },
   methods: {
       async fetchActivity() {
@@ -132,7 +139,48 @@ export default {
       },
       getImage(id) {
           return `https://nus-392633763.imgix.net/img_${id}.jpeg`;
-      }
+      },
+
+      async checkFavorite() {
+          const auth = getAuth();
+          const currentUser = auth.currentUser;
+          if (currentUser) {
+              const docRef = doc(db, 'users', currentUser.uid);
+              const docSnap = await getDoc(docRef);
+              if (docSnap.exists()) {
+                  const data = docSnap.data();
+                  if (data.favorites.includes(this.id)) {
+                      this.isFavorite = true;
+                  }
+              }
+          }
+      },
+
+      async handleToggle() {
+          const auth = getAuth();
+          const currentUser = auth.currentUser;
+          if (currentUser) {
+              const docRef = doc(db, 'users', currentUser.uid);
+              if (this.isFavorite) {
+                  await updateDoc(docRef, {
+                      favorites: arrayUnion(this.id)
+                  });
+              } else {
+                  await updateDoc(docRef, {
+                      favorites: arrayRemove(this.id)
+                  });
+              }
+          }
+      },
+
+      goToSignUpPage() {
+        if (this.activity && this.activity.Link) {
+            window.location.href = this.activity.Link;
+        } else {
+            console.error('Sign-up link not available');
+        }
+      },
+    
   }
 }
 </script>
