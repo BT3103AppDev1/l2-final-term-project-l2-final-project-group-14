@@ -54,8 +54,8 @@ export default {
   },
   data() {
     return {
-      activities: null,
-      favouriteIds: null
+      activities: [],
+      favouriteIds: []
     };
   },
   mounted() {
@@ -78,7 +78,11 @@ export default {
           const docSnap = await getDoc(docRef);
           if (docSnap.exists()) {
             const data = docSnap.data();
-            this.favouriteIds = data.favourites
+            console.log(data);
+            if (data && data.favourites) {
+              this.favouriteIds = data.favourites;
+            }
+            console.log(data.favourites);
             console.log(this.favouriteIds)
           } else {
             console.error("No such document!");
@@ -97,11 +101,10 @@ export default {
 
     async retrieveData(favouriteIds) {
       const favourites = []
-      for (const id of favouriteIds) {
+      for (id in favouriteIds) {
         const docRef = doc(activityCollection, id);
         const activityDoc = await getDoc(docRef);
         const activity = activityDoc.data();
-
         favourites.push(activity);
       }
       this.activities = favourites;
