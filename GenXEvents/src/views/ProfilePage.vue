@@ -1,7 +1,7 @@
 
   <template>
     <div class="profile-container" v-if="user">
-      <h2>Welcome back, {{ user.username }}!</h2>
+      <h2>This is your profile page, {{ user.username }}!</h2>
       <div v-if="user">
         <div class="profile-field">
           <label>Username:</label>
@@ -27,7 +27,6 @@
         
         <div class="profile-field">
             <label>Birth Year:</label>
-            <!-- Check if birthYear is an object and display the 'year' property -->
             <div v-if="!editMode">{{ user.birthYear.year ? user.birthYear.year : user.birthYear }}</div>
             <InputText v-else v-model.number="user.birthYear" type="number" placeholder="Enter your birth year" />
         </div>
@@ -44,9 +43,9 @@
 
 <script>
 import { ref, onMounted } from 'vue';
-import { useRouter } from 'vue-router';
 import firebaseTools from '../firebase.js';
 import { doc, getDoc, updateDoc } from "firebase/firestore";
+import { getAuth } from 'firebase/auth';  // Import Firebase Auth
 import InputText from 'primevue/inputtext';
 import Checkbox from 'primevue/checkbox';
 import Button from 'primevue/button';
@@ -58,7 +57,6 @@ export default {
     Button
   },
   setup() {
-    const router = useRouter();
     const user = ref(null);
     const editMode = ref(false);
     const selectedHobbies = ref([]);
@@ -66,34 +64,58 @@ export default {
     'Art', 'Workshop', 'History', 'Wildlife', 'Entertainment', 'Social', 'Sightseeing', 'Dance', 
     'Food', 'Music', 'Water Sports', 'Culture'];
     
-    const userId = 'H2ndpykRt4enidCVq8Nh3ktTCIj1';  // Replace with actual user ID logic
+    const auth = getAuth();  // Firebase Auth instance
 
-    onMounted(async () => {
-      const docRef = doc(firebaseTools.db, "users", userId);
-      const docSnap = await getDoc(docRef);
-      if (docSnap.exists()) {
-        user.value = docSnap.data();
-        selectedHobbies.value = user.value.hobbies;
+    const loadUserData = async () => {
+      const currentUser = auth.currentUser;  // Get the currently logged-in user
+      if (currentUser) {
+        try {
+          const docRef = doc(firebaseTools.db, "users", currentUser.uid);
+          const docSnap = await getDoc(docRef);
+          if (docSnap.exists()) {
+            const data = docSnap.data();
+            user.value = {
+              username: data.username || '',  // Default to empty if undefined
+              email: data.email || '',
+              birthYear: data.birthYear || '',
+              hobbies: data.hobbies || []
+            };
+            selectedHobbies.value = user.value.hobbies;  // Make sure this is an array
+          } else {
+            console.error("No such document!");
+          }
+        } catch (error) {
+          console.error("Error fetching user data:", error);
+        }
       } else {
-        console.error("No such document!");
+        console.error("User is not logged in.");
       }
-    });
+    };
+
+    onMounted(loadUserData);
 
     const toggleEditMode = () => {
       editMode.value = true;
     };
 
     const saveProfile = async () => {
-      user.value.hobbies = selectedHobbies.value;
-      const docRef = doc(firebaseTools.db, "users", userId);
-      await updateDoc(docRef, { ...user.value, hobbies: selectedHobbies.value });
-      editMode.value = false;
+      if (!user.value) {
+        console.error("Cannot save profile without user being logged in!");
+        return;
+      }
+
+      try {
+        const docRef = doc(firebaseTools.db, "users", auth.currentUser.uid);
+        await updateDoc(docRef, { ...user.value, hobbies: selectedHobbies.value });
+        editMode.value = false;
+      } catch (error) {
+        console.error("Error saving user profile:", error);
+      }
     };
 
     const cancelEdit = () => {
       editMode.value = false;
-      // Reload user data to reset changes
-      onMounted();
+      loadUserData();
     };
 
     return {
@@ -108,6 +130,7 @@ export default {
   }
 };
 </script>
+
 
   <style scoped>
   .profile-container {
@@ -156,7 +179,6 @@ export default {
     display: block;
     width: 100%;
     padding: 10px 0;
-    background-color: #007bff;
     color: white;
     border: none;
     border-radius: 4px;
@@ -165,33 +187,6 @@ export default {
   }
   
   button:hover {
-    background-color: #0056b3;
   }
-  </style>
-  
-<!-- 
+  </style> 
 
-  <style scoped>
-  .profile-container {
-    max-width: 600px;
-    margin: 50px auto;
-    padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-  }
-  
-  .profile-field {
-    margin-bottom: 1em;
-  }
-  
-  .profile-field label {
-    font-weight: bold;
-  }
-  
-  .profile-field div, input {
-    margin-left: 10px;
-  }
-  </style>
-  
-
- -->

@@ -19,8 +19,6 @@ const routes = [
         component: ActivityPage
     },
 
-
-
     {
         path: '/landing-page',
         name: 'Landing Page'
@@ -39,22 +37,40 @@ const routes = [
         component: SignIn
     },
 
-    {
-        path: '/profile',
-        name: 'Profile Page',
-        component: ProfilePage
-    },
+    // {
+    //     path: '/profile',
+    //     name: 'Profile Page',
+    //     component: ProfilePage
+    // },
 
     {
-        path: '/filter-page',
+        path: '/search',
         name: 'Search and Filter Page',
         component: SearchFilterPage
     },
     {
+
         path: '/favourites',
         name: 'Favourites Page'
         // component: FavouritePage
-    }
+    },
+
+    // {
+    //     path: '/profile/:userId',
+    //     component: ProfilePage,
+    //     props: true  // This ensures route params are passed as props to the component
+    //   },
+    // {
+    //     path: '/profile/:userId',
+    //     name: 'profile',
+    //     component: ProfilePage,  // This should be the component that handles the profile view
+    //   },
+
+      {
+        path: '/profile',
+        component: ProfilePage,
+        meta: { requiresAuth: true }  // Optional: for route guarding based on auth status
+      }
 ]
 
 const router = createRouter({

@@ -1,8 +1,18 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, sendPasswordResetEmail, onAuthStateChanged } from "firebase/auth";
-import { getFirestore, collection } from "firebase/firestore";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, sendPasswordResetEmail, onAuthStateChanged, signOut } from "firebase/auth";
+import { doc, getFirestore, setDoc, collection, getDocs, getDoc, query } from "firebase/firestore";
+
+// // firebase-admin package
+// const { initializeApp: initializeAdminApp } = require('firebase-admin/app');
+// const { getAuth: getAdminAuth, createCustomToken } = require('firebase-admin/auth');
+// const { getFirestore } = require('firebase-admin/firestore');
+
+// // Initialize firebase-admin
+// const adminApp = initializeAdminApp();
+// const adminAuth = getAdminAuth();
+// const firestore = getFirestore();
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -26,5 +36,9 @@ const auth = getAuth(app);
 const db = getFirestore(app);
 const activitiesCollection = collection(db, 'activities');
 
-const firebaseTools = { app, db, analytics, activitiesCollection, auth, createUserWithEmailAndPassword, signInWithEmailAndPassword, sendPasswordResetEmail, onAuthStateChanged };
+
+
+const firebaseTools = { app, db, analytics, activitiesCollection, auth, onAuthStateChanged, signOut,
+    doc, getFirestore, setDoc, collection, getDocs, getDoc, query,
+    createUserWithEmailAndPassword, signInWithEmailAndPassword, sendPasswordResetEmail };
 export default firebaseTools;
