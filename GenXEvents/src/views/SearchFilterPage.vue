@@ -1,6 +1,6 @@
 <template>
-  <NavBar />
     <div >
+      <NavBar />
       <!-- Search Bar -->
       <div class="input-group mb-3" >
         <input
@@ -50,7 +50,7 @@
                     <template #header>
                       <img class="w-100"
                       alt="activity image"
-                      :src="getImage(activity['Activity ID'])" />
+                      :src= "activity.ImageHostLink" />
                     </template>
                     
                     <template #title>{{activity.Type}} </template>
@@ -71,38 +71,19 @@
         </div>
       </Container>
     </div>
-    <Footer />
 </template>
-  
-<style>
-    .v-card--reveal {
-      align-items: center;
-      bottom: 0;
-      justify-content: center;
-      opacity: .8;
-      position: absolute;
-      width: 100%;
-    }
-</style>
 
 <script>
   import Card from 'primevue/card';
   import Divider from 'primevue/divider';
   import firebaseTools from '../firebase.js';
-  import Footer from '@/components/Footer.vue';
   import { collection, getDocs } from 'firebase/firestore';
-import NavBar from '@/components/NavBar.vue';
+  import NavBar from '@/components/NavBar.vue';
   const db = firebaseTools.db;
 
   export default {
     async mounted() {
       await this.retrieveData();
-    },
-
-    components: {
-      Card,
-      Footer,
-      NavBar
     },
 
     methods:{
@@ -122,10 +103,6 @@ import NavBar from '@/components/NavBar.vue';
           console.error('Error fetching data:', error);
           // Handle the error, e.g., show a message to the user or retry fetching data
         }
-      },
-
-      getImage(id) {
-        return `https://nus-392633763.imgix.net/img_${id}.jpeg`;
       },
 
 
@@ -406,6 +383,16 @@ import NavBar from '@/components/NavBar.vue';
 </script>
 
 <style>
+
+.v-card--reveal {
+      align-items: center;
+      bottom: 0;
+      justify-content: center;
+      opacity: .8;
+      position: absolute;
+      width: 100%;
+    }
+
 .card-hover:hover {
   box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
   cursor: pointer;

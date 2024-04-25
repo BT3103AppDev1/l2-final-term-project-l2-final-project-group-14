@@ -1,5 +1,6 @@
 
   <template>
+    <NavBar />
     <div class="profile-container" v-if="user">
       <h2>This is your profile page, {{ user.username }}!</h2>
       <div v-if="user">
@@ -40,6 +41,7 @@
         <p>Loading profile...</p>
       </div>
     </div>
+    <Footer />
   </template>
 
 <script>
@@ -50,6 +52,8 @@ import { getAuth } from 'firebase/auth';  // Import Firebase Auth
 import InputText from 'primevue/inputtext';
 import Checkbox from 'primevue/checkbox';
 import Button from 'primevue/button';
+import Footer from '@/components/Footer.vue';
+import NavBar from '@/components/NavBar.vue';
 
 export default {
   components: {
