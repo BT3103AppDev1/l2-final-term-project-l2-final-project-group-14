@@ -6,6 +6,7 @@ import ActivityPage from '@/views/ActivityPage.vue';
 import SignUp from '@/views/SignUp.vue';
 import ProfilePage from '@/views/ProfilePage.vue';
 import LandingPage from '@/views/LandingPage.vue';
+import FavouritePage from '@/views/FavouritePage.vue';
 
 const routes = [
     {
@@ -38,12 +39,6 @@ const routes = [
         component: SignIn
     },
 
-    // {
-    //     path: '/profile',
-    //     name: 'Profile Page',
-    //     component: ProfilePage
-    // },
-
     {
         path: '/search',
         name: 'Search and Filter Page',
@@ -51,21 +46,10 @@ const routes = [
     },
     {
 
-        path: '/favourites',
-        name: 'Favourites Page'
-        // component: FavouritePage
+        path: '/favourite',
+        name: 'Favourite Page',
+        component: FavouritePage
     },
-
-    // {
-    //     path: '/profile/:userId',
-    //     component: ProfilePage,
-    //     props: true  // This ensures route params are passed as props to the component
-    //   },
-    // {
-    //     path: '/profile/:userId',
-    //     name: 'profile',
-    //     component: ProfilePage,  // This should be the component that handles the profile view
-    //   },
 
       {
         path: '/profile',

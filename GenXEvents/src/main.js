@@ -31,7 +31,7 @@ import * as directives from 'vuetify/directives'
 const app = createApp(App)
 app.use(router)
 app.use(PrimeVue)
-// app.use(vuetify)
+app.use(vuetify)
 app.component('Dropdown', Dropdown)
 app.component('Divider', Divider)
 app.component('Card', Card)
