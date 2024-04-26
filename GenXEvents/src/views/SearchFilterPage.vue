@@ -1,80 +1,74 @@
 <template>
   <NavBar />
-    <div>
-      <!-- Search Bar -->
-      
-      <v-container>
-        <div class="input-group mb-3" >
+  <div>
+    <!-- Search Bar -->
+    <v-container>
+      <div class="input-group mb-3">
         <input
           type="text"
           class="form-control"
           placeholder="Search"
           v-model="searchTerm"
         />
-        <div class="search button" >
+        <div class="input-group-append">
           <button class="btn btn-outline-secondary" type="button" @click="clearSearch">Clear</button>
         </div>
-        
       </div>
-        <div class="row">
-          <div class="col-md-3 col-sm-3 col-xs-12">
-            <Card>
-              <template #title>Filters</template>
-              <Divider />
-              <template #content>
-                <Tree 
-                  v-model:selectionKeys="selectedKeys" 
-                  :value="items" 
-                  selection-mode="checkbox"
-                  @node-select="onNodeToggle"
-                  @node-unselect="onNodeToggle"
-                  ></Tree>
-              </template>
-  
-            </Card>
-          </div>
-          <div class="col-md-9 col-sm-9 col-xs-12">
-  
+      <div class="row">
+        <!-- Filters Section -->
+        <div class="col-md-3">
+          <Card>
+            <template #title>Filters</template>
             <Divider />
-  
-            <div class="row text-center">
-              <div class="col-md-3 col-sm-6 col-xs-12 card-hover" :key="activity['Activity ID']" v-for="activity in filteredActivities">
-
-                  <Card 
-                    class="mx-auto d-flex flex-column"
-                    color="grey lighten-4"
-                    max-width="600"
-
-                    @click="accessPage(activity)"
-                    style="width: 100%; max-width: 300px; height: 450px; margin-bottom: 10px; margin-top: 10px; display: flex; flex-direction: column; justify-content: space-between;"
-                  >
-                    <template #header>
-                      <img class="w-100"
-                      alt="activity image"
-                      :src= "getImage(activity['Activity ID'])"
-                      style="height: 250px;" />
-                    </template>
-                    
-                    <template #title >
-                      <div class="activity-title">{{activity.Type}} </div>
-                    </template>
-                    <template #subtitle>{{activity['Location']}} </template>
-                    <template #content>
-                      <div class="activity-description">{{activity.Description}}</div>
-                    </template>
-                    <template #footer>
-                      Price: ${{activity.Cost}}
-                    </template>
-                  </Card>
-
-              </div>
+            <template #content>
+              <Tree 
+                v-model:selectionKeys="selectedKeys" 
+                :value="items" 
+                selection-mode="checkbox"
+                @node-select="onNodeToggle"
+                @node-unselect="onNodeToggle"
+              ></Tree>
+            </template>
+          </Card>
+        </div>
+        <!-- Cards Display Section -->
+        <div class="col-md-9">
+          <Divider />
+          <div class="row g-3">
+            <div v-for="activity in filteredActivities" :key="activity['Activity ID']" class="col-sm-6 col-md-4">
+              <Card 
+                @click="accessPage(activity)"
+                class="d-flex flex-column"
+                style="height: 450px;"
+              >
+                <template #header>
+                  <img class="w-100"
+                    alt="activity image"
+                    :src="getImage(activity['Activity ID'])"
+                    style="height: 250px;" />
+                </template>
+                <template #title>
+                  <div class="activity-title">{{ activity.Type }}</div>
+                </template>
+                <template #subtitle>
+                  {{ activity['Location'] }}
+                </template>
+                <template #content>
+                  <div class="activity-description">{{ activity.Description }}</div>
+                </template>
+                <template #footer>
+                  Price: ${{ activity.Cost }}
+                </template>
+              </Card>
             </div>
           </div>
         </div>
-      </v-container>
-    </div>
-    <Footer />
+      </div>
+    </v-container>
+  </div>
+  <Footer />
 </template>
+
 
 <script>
   import Card from 'primevue/card';
@@ -397,18 +391,13 @@
 </script>
 
 <style>
-.search-button {
-  vertical-align: middle ;
-  /* background-color: #ffcc00; */
-  /* outline: none;
-  border: none; */
-
+#title {
+  padding: 1em;
 }
-/* .button {
-  vertical-align: middle ;
-  /* background-color: #ffcc00; */
-  /* outline: none;
-  border: none; */
+
+.search-button {
+  vertical-align: middle;
+}
 
 .input-group {
   display: flex;

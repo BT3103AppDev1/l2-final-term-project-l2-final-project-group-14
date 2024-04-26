@@ -1,4 +1,4 @@
-<template>
+<!-- <template>
   <div id="app">
     <NavBar />
     <div class="hero-image">
@@ -6,7 +6,6 @@
       <p>Find exciting events in Singapore!</p>
     </div>
     
-    <!-- Exciting Upcoming Events Section -->
     <section class="upcoming-events">
       <h2>Exciting Upcoming Events</h2>
       <div class="events-container">
@@ -29,7 +28,42 @@
     <Footer />
 
   </div>
+</template> -->
+
+<template>
+  <div id="app">
+    <NavBar />
+    <div class="hero-image">
+      <h1>Join GenXEvents now!</h1>
+      <p>Find exciting events in Singapore!</p>
+    </div>
+    
+    <!-- Exciting Upcoming Events Section -->
+    <section class="upcoming-events">
+      <h2>Exciting Upcoming Events</h2>
+      <div class="container"> <!-- Bootstrap container for proper alignment and responsiveness -->
+        <div class="row g-3"> <!-- Using Bootstrap's row and g-3 for spacing between cards -->
+          <div v-for="event in events" :key="event['Activity ID']" class="col-sm-6 col-md-4 col-lg-3">
+            <Card @click="accessPage(event)" class="d-flex flex-column" style="height: 100%;">
+              <template #header>
+                <img :src="getImage(event['Activity ID'])" alt="Event Image" class="w-100" style="height: 200px;"> <!-- Ensured image takes full width of the card and fixed height -->
+              </template>
+              <template #content>
+                <div class="p-card-title">{{ event.Type }}</div>
+                <div class="p-card-subtitle">{{ event.DateTime }}</div>
+              </template>
+              <template #footer>
+                <div class="p-card-footer">{{ event.Location }}</div>
+              </template>
+            </Card>
+          </div>
+        </div>
+      </div>
+    </section>
+    <Footer />
+  </div>
 </template>
+
 
 <script>
 import Card from 'primevue/card';
@@ -71,7 +105,7 @@ export default {
 
     async fetchEvents() {
       const uniqueId = []
-      while (this.events.length != 5) {
+      while (this.events.length != 8) {
         const randomIndex = Math.floor(Math.random() * 61);
         const docRef = doc(activitiesCollection, String(randomIndex));
         const activityDoc = await getDoc(docRef);

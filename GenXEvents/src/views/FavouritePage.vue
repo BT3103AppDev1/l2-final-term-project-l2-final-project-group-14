@@ -32,6 +32,8 @@
   <Footer />
 </template>
 
+
+
 <script>
 import Card from 'primevue/card';
 import Tag from 'primevue/tag';

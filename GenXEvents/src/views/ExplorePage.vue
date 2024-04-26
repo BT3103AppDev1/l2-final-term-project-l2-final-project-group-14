@@ -1,33 +1,38 @@
 <template>
   <NavBar />
-  <main class="explore-page">
+  <main class="explore-page"> <!-- Existing margin around the main content -->
     <h2 id="Explore">Just For You</h2>
     <div v-if="recommendations" class="recommendation-list-wrapper">
-    <div class="recommendation-list">
-        <div v-for="recommendation in recommendations" :key="recommendation['Activity ID']" class="recommendation-item">
-          <Card @click="accessPage(recommendation)" class="custom-card">
-            <template #title>
-              <h4>{{ recommendation.Type }}</h4>
-            </template>
-            <template #header>
-              <div class="image-wrapper">
-                <img class="image" alt="activity image" :src="getImage(recommendation['Activity ID'])"/>
-              </div>
-            </template>
-            <template #content>
-              <div class="tags">
-                <Tag v-for="tag in recommendation.Tags.split(',')" :key="tag" :value="tag.trim()" class="tag" severity="secondary"></Tag>
-              </div>
-              <p style="font-size: small;">{{ recommendation['Location Estate'] }}</p>
-              <p style="font-size: small;">{{ recommendation.DateTime }}</p>
-            </template>
-          </Card>
+      <!-- Bootstrap container for better control of content width and margins, added bottom margin -->
+      <div class="container mb-5"> <!-- Added 'mb-5' for margin-bottom to create space above the footer -->
+        <div class="row g-3"> <!-- g-3 provides gaps between the cards -->
+          <div v-for="recommendation in recommendations" :key="recommendation['Activity ID']" class="col-sm-6 col-md-4 col-lg-3">
+            <Card @click="accessPage(recommendation)" class="d-flex flex-column" style="height: 450px;">
+              <template #title>
+                <h4>{{ recommendation.Type }}</h4>
+              </template>
+              <template #header>
+                <img class="w-100" alt="activity image" :src="getImage(recommendation['Activity ID'])" style="height: 250px;" />
+              </template>
+              <template #content>
+                <div class="tags">
+                  <Tag v-for="tag in recommendation.Tags.split(',')" :key="tag" :value="tag.trim()" class="tag" severity="secondary"></Tag>
+                </div>
+                <p style="font-size: small;">{{ recommendation['Location Estate'] }}</p>
+                <p style="font-size: small;">{{ recommendation.DateTime }}</p>
+              </template>
+            </Card>
+          </div>
         </div>
-    </div>
+      </div>
     </div>
   </main>
   <Footer />
 </template>
+
+
+
+
 
 <script>
 import Card from 'primevue/card';
@@ -75,7 +80,7 @@ export default {
       querySnapshot.forEach(doc => {
         activities.push(doc.data());
       });
-      const randomActivities = this.shuffleArray(activities).slice(0, 6);
+      const randomActivities = this.shuffleArray(activities).slice(0, 8);
       this.recommendations = randomActivities;
       console.log(this.recommendations);
     },
@@ -132,7 +137,7 @@ export default {
         });
       }
 
-      while (filteredActivities.length != 6) {
+      while (filteredActivities.length != 8) {
         const randomIndex = Math.floor(Math.random() * uniqueId.length);
         const id = uniqueId[randomIndex];
         const docRef = doc(activityCollection, id);
