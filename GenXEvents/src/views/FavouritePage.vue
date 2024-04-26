@@ -26,7 +26,7 @@
     </div>
     </div>
     <div v-else>
-      <h4>You do not have any favourite activities yet!</h4>
+      <h4 style="padding: 1em;">You do not have any favourite activities yet!</h4>
     </div>
   </main>
   <Footer />
