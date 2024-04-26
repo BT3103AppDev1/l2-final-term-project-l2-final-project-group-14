@@ -327,15 +327,15 @@ object-fit: cover; /* Ensures the image covers the container, maintaining its as
   /* background-color: #ffcc00; */
 }
 
-.favorite-on {
-  background-color: grey !important; /* Sets the background color when favorited */
-  border-color: grey !important; /* Optional: sets the border color to match */
-}
-
+/* .favorite-on {
+  background-color: grey !important; 
+  border-color: grey !important; 
+} */
+/* 
 .favorite-off {
-  background-color: #ffcc00 !important; /* Sets the background color when not favorited */
-  border-color: #ffcc00 !important; /* Optional: sets the border color to match */
-}
+  background-color: #ffcc00 !important; 
+  border-color: #ffcc00 !important; 
+} */
 
 .fav,
 .signup {
