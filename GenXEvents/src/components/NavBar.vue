@@ -81,8 +81,7 @@ export default {
                 await signOut(auth);
                 this.loggedIn = false;
                 this.username = '';
-                this.router.push('/login');
-                // this.$router.push('/login'); // Redirect to login page after logout
+                this.router.push('/');
             } catch (error) {
                 console.error('Error signing out:', error);
             }
