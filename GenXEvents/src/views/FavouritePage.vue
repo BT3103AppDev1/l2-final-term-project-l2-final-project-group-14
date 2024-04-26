@@ -79,8 +79,8 @@ export default {
           if (docSnap.exists()) {
             const data = docSnap.data();
             console.log(data);
-            this.favouriteIds = data.favourites;
-            console.log(data.favourites);
+            this.favouriteIds = data.favorites;
+            console.log(data.favorites);
             console.log(this.favouriteIds)
           } else {
             console.error("No such document!");
@@ -99,7 +99,7 @@ export default {
 
     async retrieveData(favouriteIds) {
       const favourites = []
-      for (id in favouriteIds) {
+      for (const id of favouriteIds) {
         const docRef = doc(activityCollection, id);
         const activityDoc = await getDoc(docRef);
         const activity = activityDoc.data();
