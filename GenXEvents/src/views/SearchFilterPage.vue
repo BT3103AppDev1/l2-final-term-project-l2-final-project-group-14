@@ -1,8 +1,10 @@
 <template>
   <NavBar />
-    <div >
+    <div>
       <!-- Search Bar -->
-      <div class="input-group mb-3" >
+      
+      <v-container>
+        <div class="input-group mb-3" >
         <input
           type="text"
           class="form-control"
@@ -14,7 +16,6 @@
         </div>
         
       </div>
-      <v-container>
         <div class="row">
           <div class="col-md-3 col-sm-3 col-xs-12">
             <Card>
@@ -396,6 +397,27 @@
 </script>
 
 <style>
+.search-button {
+  vertical-align: middle ;
+  /* background-color: #ffcc00; */
+  /* outline: none;
+  border: none; */
+
+}
+/* .button {
+  vertical-align: middle ;
+  /* background-color: #ffcc00; */
+  /* outline: none;
+  border: none; */
+
+.input-group {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}
+
 .card-hover:hover {
   box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
   cursor: pointer;
