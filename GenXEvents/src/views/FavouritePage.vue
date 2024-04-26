@@ -1,7 +1,7 @@
 <template>
   <NavBar />
   <main class="favourite-page">
-    <h2 id="Favourite">Favourites</h2>
+    <h2 id="Favourite">Your recent favourites</h2>
     <div v-if="activities" class="recommendation-list-wrapper">
     <div class="recommendation-list">
         <div v-for="activity in activities" :key="activity['Activity ID']" class="recommendation-item">
@@ -26,7 +26,7 @@
     </div>
     </div>
     <div v-else>
-      <h4>You have no favourite activities yet</h4>
+      <h4>You do not have any favourite activities yet!</h4>
     </div>
   </main>
   <Footer />
@@ -36,7 +36,7 @@
 import Card from 'primevue/card';
 import Tag from 'primevue/tag';
 import firebaseTools from '@/firebase';
-import { collection, getDocs, getDoc, doc } from 'firebase/firestore';
+import { collection, getDoc, doc } from 'firebase/firestore';
 import NavBar from '@/components/NavBar.vue';
 import Footer from '@/components/Footer.vue';
 const db = firebaseTools.db;
@@ -54,8 +54,8 @@ export default {
   },
   data() {
     return {
-      activities: [],
-      favouriteIds: []
+      activities: null,
+      favouriteIds: null
     };
   },
   mounted() {
@@ -79,9 +79,7 @@ export default {
           if (docSnap.exists()) {
             const data = docSnap.data();
             console.log(data);
-            if (data && data.favourites) {
-              this.favouriteIds = data.favourites;
-            }
+            this.favouriteIds = data.favourites;
             console.log(data.favourites);
             console.log(this.favouriteIds)
           } else {
@@ -112,12 +110,12 @@ export default {
     },
 
     // to access page upon clicking the activity
-    accessPage(recommendation) {
+    accessPage(activity) {
       console.log("Directed to the activity page");
       this.$router.push({ 
         name: 'Activity Page', 
         query: {
-          id: recommendation["Activity ID"]
+          id: activity["Activity ID"]
         } 
       })
     }
