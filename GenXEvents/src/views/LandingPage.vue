@@ -102,6 +102,10 @@ export default {
   object-fit: cover;
 }
 
+.upcoming-events {
+  padding: 20px;
+}
+
 .horizontal-scroll-container {
   display: flex;
   overflow-x: auto;
