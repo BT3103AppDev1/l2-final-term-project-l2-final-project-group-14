@@ -1,4 +1,5 @@
 <template>
+  <NavBar />
   <div class="sign-in-container">
     <h2>Sign In</h2>
     <form @submit.prevent="signIn">
@@ -12,7 +13,8 @@
         <InputText id="password" v-model="password" type="password" placeholder="Enter your password" />
       </div>
 
-      <Button label="Sign In" type="Submit" />
+      <!-- <Button label="Sign In" type="Submit" /> -->
+      <Button label="Sign In" type="Submit" class="sign-in-button" />
     </form>
   </div>
 </template>
@@ -25,11 +27,13 @@ const firebaseAuth  = firebaseTools.auth;
 import { signInWithEmailAndPassword } from "firebase/auth";
 import InputText from 'primevue/inputtext';
 import Button from 'primevue/button';
+import NavBar from '@/components/NavBar.vue';
 
 export default {
   components: {
     InputText,
-    Button
+    Button,
+    NavBar
   },
 
     data() {
@@ -105,6 +109,13 @@ export default {
   margin: 50px auto;
   padding: 20px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.sign-in-button {
+  width: 100%;
+  margin-top: 1em;
+  background-color: #ffcc00;
+  padding-block: 0.5em;
 }
 
 .p-field {

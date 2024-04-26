@@ -1,5 +1,6 @@
 
   <template>
+    <NavBar />
     <div class="profile-container" v-if="user">
       <h2>This is your profile page, {{ user.username }}!</h2>
       <div v-if="user">
@@ -32,7 +33,7 @@
         </div>
 
         <Button label="Edit Profile" icon="pi pi-pencil" @click="toggleEditMode" v-if="!editMode" />
-        <Button label="Return to Home Page" icon="pi pi-home" @click="returnToHomePage()" v-if="!editMode"/>
+        <Button label="Return to Home Page" icon="pi-home" @click="returnToHomePage()" />
         <Button label="Save Changes" icon="pi pi-check" @click="saveProfile" v-if="editMode" />
         <Button label="Cancel" icon="pi pi-times" @click="cancelEdit" v-if="editMode" />
       </div>
@@ -40,6 +41,7 @@
         <p>Loading profile...</p>
       </div>
     </div>
+    <Footer />
   </template>
 
 <script>
@@ -50,6 +52,8 @@ import { getAuth } from 'firebase/auth';  // Import Firebase Auth
 import InputText from 'primevue/inputtext';
 import Checkbox from 'primevue/checkbox';
 import Button from 'primevue/button';
+import Footer from '@/components/Footer.vue';
+import NavBar from '@/components/NavBar.vue';
 
 export default {
   components: {
@@ -190,7 +194,7 @@ export default {
     display: block;
     width: 100%;
     padding: 10px 0;
-    background-color: #ffcc00;
+    color: white;
     border: none;
     border-radius: 4px;
     cursor: pointer;

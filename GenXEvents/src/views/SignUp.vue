@@ -1,4 +1,5 @@
 <template>
+  <NavBar />
   <div class="sign-up-container">
     <h2>Sign Up</h2>
     <form @submit.prevent="signUp">
@@ -32,7 +33,7 @@
         </div>
       </div>
 
-      <Button label="Sign Up" type="submit" />
+      <Button label="Sign Up" type="submit" class="sign-up-button" />
     </form>
   </div>
 </template>
@@ -49,13 +50,15 @@ import InputText from 'primevue/inputtext';
 import Dropdown from 'primevue/dropdown';
 import Checkbox from 'primevue/checkbox';
 import Button from 'primevue/button';
+import NavBar from '@/components/NavBar.vue';
 
 export default {
   components: {
     InputText,
     Dropdown,
     Checkbox,
-    Button
+    Button,
+    NavBar
   },
 
   setup() {
@@ -122,6 +125,13 @@ export default {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
+.sign-up-button {
+  width: 100%;
+  margin-top: 1em;
+  background-color: #ffcc00;
+  padding-block: 0.5em;
+}
+
 .p-field {
   margin-bottom: 1em;
 }
@@ -129,6 +139,12 @@ export default {
 label {
   display: block;
   margin-bottom: 0.5em;
+}
+
+input {
+  width: 100%;
+  padding: 8px;
+  box-sizing: border-box;
 }
 
 .hobbies {

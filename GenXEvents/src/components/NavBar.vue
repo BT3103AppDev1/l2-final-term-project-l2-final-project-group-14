@@ -6,18 +6,14 @@
             <router-link to="/favourite" class="nav-link">Favourites</router-link>
         </div>
         <div class="right-cont">
-            <Button icon="pi pi-search" severity="success" rounded outlined aria-label="Search" @click="handleSearch" />
+            <Button icon="pi pi-search" severity="success" rounded outlined aria-label="Search" @click="handleSearch" class="search-button"/>
             <span v-if="loggedIn">
-                <!-- <router-link :to="{ name: 'profile', params: { userId: userId }}" class="user-profile-link">{{ username }}</router-link> -->
-                <!-- <router-link to="/profile" class="user-profile-link">{{ username }}</router-link> -->
-                <Button icon="pi pi-user" :label="username" class="user-profile-button" @click="goToProfile" />
-                <!-- <Button icon="pi pi-user" label="{{ username }}" class="user-profile-button" @click="goToProfile" /> -->
-                <!-- <router-link :to="{ name: 'profile', params: { userId: userId }}" class="user-profile-link">{{ username }}</router-link> -->
-                <Button @click="logout">Logout</button>
+                <Button icon="pi pi-user" :label="username" class="user-profile-button yellow-button" @click="goToProfile" />
+                <Button @click="logout" style="font-size: 1rem;" class="yellow-button">Logout</button>
             </span>
             <span v-else>
-                <Button @click="goToSignup" style="font-size: 1rem;">Signup</button>
-                <Button @click="goToLogin" style="font-size: 1rem;">Login</button>
+                <Button @click="goToSignup" style="font-size: 1rem;" class="yellow-button">Signup</button>
+                <Button @click="goToLogin" style="font-size: 1rem;" class="yellow-button">Login</button>
             </span>
         </div>
     </nav>
@@ -33,8 +29,6 @@ const signOut = firebaseTools.signOut;
 const db = firebaseTools.db; 
 const doc = firebaseTools.doc;
 const getDoc = firebaseTools.getDoc;
-
-// import { auth, onAuthStateChanged, signOut } from '@/firebase'; // Adjusted imports to include necessary functions
 
 export default {
     name: 'navbar',
@@ -113,53 +107,7 @@ export default {
 };
 </script>
 
-<!-- 
-<script>
-import Button from 'primevue/button';
-import firebaseTools from '@/firebase';
-const auth = firebaseTools.auth;
 
-
-export default {
-    name: 'navbar',
-    data() {
-        return {
-            loggedIn: false
-        }
-    },
-    mounted() {
-        firebaseTools.onAuthStateChanged(auth, (user) => {
-            if (user) {
-                this.loggedIn = true;
-            }
-        })
-    },
-    methods: {
-        async logout() { 
-            signOut(this.auth)
-                .then(() => {
-                    this.loggedIn = false;
-                    this.$router.push('/login'); // redirect to home page?
-                })
-                .catch((error) => {
-                    console.error('Error signing out:', error);
-                });
-        },
-        handleSearch() {
-            this.$router.push('/search');
-        },
-        goToSignup() {
-            this.$router.push('/sign-up');
-        },
-        goToLogin() {
-            this.$router.push('/login');
-        },
-    },
-    components: {
-        Button
-    }
-};
-</script> -->
 
 
 <style scoped>
@@ -196,9 +144,19 @@ export default {
 }
 
 .right-cont {
-    /* is it really text align tho -- or element align */
     text-align: right; 
     display: flex;
+}
+
+.search-button {
+  background-color: #ffcc00; /* Hex code for the yellow color */
+  border-color: #ffcc00; /* Make the border the same color for consistency */
+}
+
+.yellow-button {
+  background-color: #ffcc00; /* Hex code for the yellow color */
+  border-color: #ffcc00; /* Make the border the same color for consistency */
+  padding: 0.5em; /* Add padding to make the button more clickable */
 }
 
 </style>
