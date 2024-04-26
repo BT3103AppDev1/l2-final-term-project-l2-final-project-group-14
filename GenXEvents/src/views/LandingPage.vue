@@ -103,7 +103,7 @@ export default {
 }
 
 .upcoming-events {
-  padding: 20px;
+  padding: 1.2em;
 }
 
 .horizontal-scroll-container {
