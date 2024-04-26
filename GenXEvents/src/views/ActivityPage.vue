@@ -8,7 +8,7 @@
                   <div class="header">
                       <h2>{{ this.activity.Type }}</h2>
                       <div class="rating">
-                          <p>Rating: {{ this.activity.Rating }}</p>
+                          <p>Rating: {{ rating }}</p>
                       </div>
                   </div>
     
@@ -34,20 +34,20 @@
               </div>
   
               <div class="right-column">
-                    <div class="fav">
-                      
+                    <div class="fav"> 
                       <ToggleButton
                         v-model="isFavorite"
+                        :class="['toggle-button-full', isFavorite ? 'favorite-on' : 'favorite-off']"
                         on-icon="pi pi-heart-fill"
                         off-icon="pi pi-heart"
                         on-label="Remove from Favorite"
                         off-label="Add to Favorite"
+                        styleclass="different"
                         @change="handleToggle"
-                       
                       />
                     </div>
                     <div class="signup">
-                      <Button label="Go to Sign up Page" class="p-button-success signup-button" @click="goToSignUpPage"></Button>
+                      <Button label="Go to Sign up Page"  @click="goToSignUpPage" class="signup-button"></Button>
 
                       <!-- <Button label="Add to Favourite" icon="pi pi-heart" class="p-button-warning"></Button> -->
                       <!-- <Button label="Go to Sign up Page" class="p-button-success signup-button"></Button> -->
@@ -74,9 +74,6 @@
           <div class = "Footer">
             <Footer />
           </div>
-        
-      
-      
     </template>
 
 <script>
@@ -110,15 +107,21 @@ export default {
       return {
           activity: null,
           id: null,
-          isFavorite: false,
+          isFavorite: null,
+          tags: ['Fitness', 'Cultural'],
+          rating: 4.5,
 
       }
   },
   mounted() {
-      this.fetchActivity();
-      console.log(this.activity);
-      this.checkFavorite();
+    this.fetchActivity().then(() => {
+        console.log(this.activity);
+        this.checkFavorite();
+    }).catch(error => {
+        console.error('Failed to fetch activity:', error);
+    });
   },
+
   methods: {
       async fetchActivity() {
           try {
@@ -130,6 +133,13 @@ export default {
               if (activityDoc.data()) {
                   this.activity = activityDoc.data();
                   this.id = activityId;
+                  // this.rating = this.activity.Rating;
+                  if (this.activity.Tags && this.activity.Tags.trim().length > 0) {
+                // Split the tags string by comma and map to trim any leading/trailing whitespace
+                      this.tags = this.activity.Tags.split(',').map(tag => tag.trim());
+                  } else {
+                      this.tags = []; // Ensure tags is an empty array if there are no tags
+                  }
               } else {
                   console.error('Activity not found');
               }
@@ -142,18 +152,27 @@ export default {
       },
 
       async checkFavorite() {
-          const auth = getAuth();
-          const currentUser = auth.currentUser;
-          if (currentUser) {
-              const docRef = doc(db, 'users', currentUser.uid);
-              const docSnap = await getDoc(docRef);
-              if (docSnap.exists()) {
-                  const data = docSnap.data();
-                  if (data.favorites.includes(this.id)) {
-                      this.isFavorite = true;
-                  }
-              }
-          }
+        const auth = getAuth();
+        const currentUser = auth.currentUser;
+        if (currentUser) {
+            const docRef = doc(db, 'users', currentUser.uid);
+            const docSnap = await getDoc(docRef);
+            if (docSnap.exists()) {
+                const data = docSnap.data();
+                // Check if the favorites array includes this activity ID
+                if (data.favorites && data.favorites.includes(this.id)) {
+                    this.isFavorite = true;
+                } else {
+                    this.isFavorite = false;
+                }
+            } else {
+                console.log("No such user document!");
+                this.isFavorite = false; // Ensure default is set if the document doesn't exist
+            }
+        } else {
+            console.log("No current user logged in.");
+            this.isFavorite = false; // Ensure default is set if no user is logged in
+        }
       },
 
       async handleToggle() {
@@ -287,51 +306,74 @@ object-fit: cover; /* Ensures the image covers the container, maintaining its as
   color:#ff9900;
 }
 
+.sign-up-button {
+  width: 100%;
+  margin-top: 1em;
+  background-color: #ffcc00;
+  padding-block: 0.5em;
+}
 
+.different.ui-togglebutton.ui-button.ui-state-active {
+  background-color: #ffcc00 !important;
+  color: #333;
 
-/* .signup-button {
-background-color: grey; 
-border-color: grey; 
-box-shadow: lightgrey;
-} */
+}
+/* Newly added, not tested. Custom styles for the toggle button */
+.toggle-button-full {
+  width: 100%; /* Ensures the button takes the full width of its container */
+  font-weight: bolder; /* Makes the font bold */
+  font-size: 1.2em; /* Increases the font size */
+  padding-block: 1.2em;
+  /* background-color: #ffcc00; */
+}
+
+.favorite-on {
+  background-color: grey !important; /* Sets the background color when favorited */
+  border-color: grey !important; /* Optional: sets the border color to match */
+}
+
+.favorite-off {
+  background-color: #ffcc00 !important; /* Sets the background color when not favorited */
+  border-color: #ffcc00 !important; /* Optional: sets the border color to match */
+}
 
 .fav,
 .signup {
 flex-grow: 1; /* Grow to fill available space */
 }
 
-.p-togglebutton .p-button {
-background-color: aquamarine;
-}
-.p-togglebutton .p-button .p-button-label, .p-togglebutton .p-button .p-button-icon {
-  position: relative;
-  font-weight: bold;
-  color: pink;
-  transition: none;
-}
-
-.p-togglebutton:not(.p-disabled):has(.p-togglebutton-input:hover):not(.p-highlight) .p-button {
-color: pink;
-background-color: aquamarine;
-}
-
-.custom-toggle-button,
 .signup-button {
-flex: 1; /* Occupy available horizontal space */
-}
-/* For overriding PrimeVue styles specifically, you might need to target inner elements */
-.p-button-label {
-color: #fff; /* This would make the text color white, for example */
-font-weight: bold !important;
+  width: 100%; /* Make the button take up the full width */
+  background-color: grey ;
+  margin-top: 1em; /* Add space above the button */
+  padding: 0.5em; /* Add padding to make the button more clickable */
+  color: white; /* Choose a text color that has good contrast with the button color */
 }
 
-.category-tags {
-margin-top: 10px; /* Add margin to create space between tags and buttons */
+.ui-togglebutton.ui-button.ui-state-active {
+  background-color: #ffcc00 !important;
+  color: #333;
+
 }
+
+.p-component {
+  font-weight: bolder;
+}
+
+.p-togglebutton .p-highlight {
+background-color: blue !important;
+}
+/* .input.p-togglebutton-input {
+background-color: #ffcc00 !important;
+
+} */
+
 
 .category-tags .p-button-rounded {
+  margin: 0.5em; /* Adjust margin as needed */
 font-size: small; /* Adjust font size */
 padding: 6px 10px; /* Adjust padding */
+background-color: #ffcc00;
 }
 
 .comments,

@@ -8,7 +8,7 @@
         <div class="right-cont">
             <Button icon="pi pi-search" severity="success" rounded outlined aria-label="Search" @click="handleSearch" class="search-button"/>
             <span v-if="loggedIn">
-                <Button icon="pi pi-user" :label="username" class="user-profile-button yellow-button" @click="goToProfile" />
+                <Button icon="pi pi-user" :label=" username" class="user-profile-button yellow-button" @click="goToProfile" />
                 <Button @click="logout" style="font-size: 1rem;" class="yellow-button">Logout</button>
             </span>
             <span v-else>
@@ -156,6 +156,10 @@ export default {
   background-color: #ffcc00; /* Hex code for the yellow color */
   border-color: #ffcc00; /* Make the border the same color for consistency */
   padding: 0.5em; /* Add padding to make the button more clickable */
+}
+
+.user-profile-button .yellow-button {
+    padding: 0.5em; /* Add padding to make the button more clickable */
 }
 
 </style>

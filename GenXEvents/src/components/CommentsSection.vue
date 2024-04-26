@@ -5,7 +5,7 @@
       <div class="avatar">
         <!-- <Avatar image="comment.avatar" class="mr-2" size="xlarge" shape="circle" /> -->
         <!-- This will display the user's avatar -->
-        <img :src="comment.avatar" alt="User avatar" />
+        <!-- <img :src="comment.avatar" alt="User avatar" /> -->
       </div>
       <div class="content">
         <div class="rating">
@@ -33,19 +33,19 @@ export default {
   name: 'CommentsSectionAgain',
   components: {
     Rating,
-    Avatar
+    // Avatar
   },
   setup() {
     // Example comments data
     const comments = ref([
       {
-        avatar: 'avatar-sample-1.png', // Replace with actual image paths
+        // avatar: 'avatar-sample-1.png', // Replace with actual image paths
         
         rating: 2,
         message: 'Had fun doing this. Though, my eyesight is not good enough for this activity. very small.'
       },
       {
-        avatar: 'avatar-sample-2.png',
+        // avatar: 'avatar-sample-2.png',
         rating: 5,
         message: 'Roared through this dino origami activity! Very fun. Can bring home to my grandsons. They love it!!!'
       }

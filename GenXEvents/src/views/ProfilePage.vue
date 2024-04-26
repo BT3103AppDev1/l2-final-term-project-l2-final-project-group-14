@@ -32,10 +32,10 @@
             <InputText v-else v-model.number="user.birthYear" type="number" placeholder="Enter your birth year" />
         </div>
 
-        <Button label="Edit Profile" icon="pi pi-pencil" @click="toggleEditMode" v-if="!editMode" />
-        <Button label="Return to Home Page" icon="pi-home" @click="returnToHomePage()" />
-        <Button label="Save Changes" icon="pi pi-check" @click="saveProfile" v-if="editMode" />
-        <Button label="Cancel" icon="pi pi-times" @click="cancelEdit" v-if="editMode" />
+        <Button label=" Edit Profile" icon="pi pi-pencil" @click="toggleEditMode" v-if="!editMode" />
+        <Button label=" Return to Home Page" icon="pi pi-home" @click="returnToHomePage()" />
+        <Button label=" Save Changes" icon="pi pi-check" @click="saveProfile" v-if="editMode" />
+        <Button label=" Cancel" icon="pi pi-times" @click="cancelEdit" v-if="editMode" />
       </div>
       <div v-else>
         <p>Loading profile...</p>

@@ -72,6 +72,7 @@ export default {
 }
 
 .rating-stars {
+  with: 100px; /* Set a fixed width for the rating stars */
   margin-right: 0.5em; /* This adds some space to the right of the rating stars, if needed */
 }
 
@@ -81,6 +82,9 @@ export default {
 
 .comment-section textarea {
   margin-top: 10px; /* Adds space above the Textarea. Adjust as needed */
+  width: 100%; /* Make the Textarea take up the full width of the container */
+  border: lightgrey;
+  border-style: groove;
 }
 
 .submit-button {
@@ -88,6 +92,12 @@ export default {
   background-color: #ffcc00;
   border: none;
   color: #333; /* Choose a text color that has good contrast with the button color */
+  padding-block: 0.5em; /* Add padding to make the button more clickable */
+  width: 100%; /* Make the button take up the full width of the container */
+}
+
+.submit-button:hover {
+  background-color: #ffbb00; /* Change the background color on hover */
 }
 
 /* Style the rating component */
